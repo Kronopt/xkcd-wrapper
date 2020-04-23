@@ -1,13 +1,22 @@
-# PythonProjectTemplate
-Python Project Template/Skeleton
+# xkcd-wrapper
+<badges: pypi version, supported python versions, downloads, CI, codecov, snyk, license>
 
-The purpose of this repository is to have all the files, folders and style conventions that are usually part of a
-standard python project in a single location.
+<small one line description of the project>
 
-Some things might not make sense for every project, but overall the most import elements are here.
+#### Dependencies
+* Python <version>
+* <other libraries>
 
-I created this template for my own personal use, but feel free to use it.
+#### Installation
 
-## How to use
-Just copy the `Project` folder or
-[use this template directly](https://github.com/Kronopt/PythonProjectTemplate/generate) to start a new python project.
+#### Usage / How to run
+<give code examples>
+
+#### Documentation (link)
+
+#### Features
+
+#### Work in progress / Ideas for the Future
+<list whats is being worked on or ideas>
+
+#### Acknowledgments

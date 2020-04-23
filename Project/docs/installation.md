@@ -1,2 +1,0 @@
-# Installation
-<how to install>

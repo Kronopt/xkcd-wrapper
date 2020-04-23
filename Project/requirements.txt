@@ -1,2 +1,0 @@
-# Package dependencies should be in the following format
-# <package_name>==#.#.#     # <Small description for why this package is here>

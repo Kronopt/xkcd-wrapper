@@ -1,8 +1,0 @@
-# files/folders to be ignored by git
-*.pyc
-
-# Pycharm files
-.idea/
-
-# VirtualEnv
-venv/

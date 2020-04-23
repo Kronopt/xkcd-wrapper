@@ -19,7 +19,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         make install-dependencies
-        make install-dependencies-test
+        make install-dependencies-dev
 
     - name: Tests
       run: make test
@@ -37,7 +37,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         make install-dependencies
-        make install-dependencies-test
+        make install-dependencies-dev
 
     - name: Lint
       run: make lint
