@@ -105,6 +105,10 @@ class Client:
             If comic_id is not an int
         requests.HTTPError, requests.Timeout
             If an http error or a timeout occurs
+        xkcd_wrapper.exceptions.BadResponseField
+            If response contained a field that could not be converted to int (after json decode)
+        xkcd_wrapper.exceptions.HttpError
+            If an http code different from 200 is returned
         """
         if isinstance(comic_id, int):
             parsed_response = self._parse_response(self._request_comic(comic_id))
@@ -126,6 +130,10 @@ class Client:
         ------
         requests.HTTPError, requests.Timeout
             If an http error or a timeout occurs
+        xkcd_wrapper.exceptions.BadResponseField
+            If response contained a field that could not be converted to int (after json decode)
+        xkcd_wrapper.exceptions.HttpError
+            If an http code different from 200 is returned
         """
         return self.get(0)  # comic_id of 0 requests latest comic
 
@@ -145,6 +153,10 @@ class Client:
         ------
         requests.HTTPError, requests.Timeout
             If an http error or a timeout occurs
+        xkcd_wrapper.exceptions.BadResponseField
+            If response contained a field that could not be converted to int (after json decode)
+        xkcd_wrapper.exceptions.HttpError
+            If an http code different from 200 is returned
         """
         # This method has to contact the xkcd API twice: first to get the latest comic id,
         # and then to get the actual randomized comic.
@@ -176,10 +188,10 @@ class Client:
 
         Raises
         ------
-        exceptions.HttpError
-            If an http code different from 200 is returned
         requests.HTTPError, requests.Timeout
             If an http error or a timeout occurs
+        xkcd_wrapper.exceptions.HttpError
+            If an http code different from 200 is returned
         """
         if comic_id <= 0:
             comic_url = self.latest_comic_url()
@@ -207,7 +219,7 @@ class Client:
 
         Raises
         ------
-        exceptions.BadResponseField
+        xkcd_wrapper.exceptions.BadResponseField
             If response contained a field that could not be converted to int (after json decode)
         """
         # relation between xkcd-wrapper fields and xkcd API fields
