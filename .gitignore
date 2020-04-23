@@ -1,5 +1,9 @@
 # files/folders to be ignored by git
 *.pyc
+.coverage
+build/
+dist/
+xkcd_wrapper.egg-info/
 
 # Pycharm files
 .idea/

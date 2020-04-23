@@ -1,4 +1,4 @@
-.PHONY: help install-dependencies install-dependencies-dev test lint coverage docs-test build build-test release clean clean-pyc clean-tests clean-coverage clean-build
+.PHONY: help install-dependencies install-dependencies-dev test lint coverage docs-test build build-test release clean clean-pyc clean-coverage clean-build
 
 help:
 	@echo ""
@@ -14,7 +14,6 @@ help:
 	@echo "build-test                   tests build for errors and uploads to test.pypi.org"
 	@echo "release                      builds and uploads python package to pypi.org"
 	@echo ""
-	@echo "clean-tests                  removes temp test files and folders"
 	@echo "clean-coverage               removes coverage files"
 	@echo "clean-build                  removes packaging artifacts"
 	@echo "clean-pyc                    removes python file artifacts"
@@ -50,9 +49,6 @@ build-test:
 release: build
 	twine upload dist/*
 
-clean-tests:
-	rm -rf .pytest_cache/
-
 clean-coverage:
 	python -m coverage erase
 
@@ -67,4 +63,4 @@ clean-pyc:
 	rm -f xkcd_wrapper/*.pyo tests/*.pyo
 	rm -f xkcd_wrapper/*~ tests/*~
 
-clean: clean-tests clean-coverage clean-build clean-pyc
+clean: clean-coverage clean-build clean-pyc

@@ -17,7 +17,6 @@ echo build                          builds python package (sdist)
 echo build-test                     tests build for errors and uploads to test.pypi.org
 echo release                        builds and uploads python package to pypi.org
 echo.
-echo clean-tests                    removes temp test files and folders
 echo clean-coverage                 removes coverage files
 echo clean-build                    removes packaging artifacts
 echo clean-pyc                      removes python file artifacts
@@ -66,10 +65,6 @@ call:build
 twine upload dist/*
 goto:eof
 
-:clean-tests
-rmdir /s /q .pytest_cache
-goto:eof
-
 :clean-coverage
 python -m coverage erase
 goto:eof
@@ -88,7 +83,6 @@ del /s tests\*.pyc tests\*.pyo tests\*~
 goto:eof
 
 :clean
-call:clean-tests
 call:clean-coverage
 call:clean-build
 call:clean-pyc

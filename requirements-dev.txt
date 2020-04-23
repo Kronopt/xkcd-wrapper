@@ -3,3 +3,7 @@ requests-mock==1.7.*    # tests
 pylint==2.4.*           # style
 coverage==5.1.*         # coverage
 mkdocs==1.1.*           # docs
+twine                   # pypi tools
+pyOpenSSL               # twine dependency
+readme_renderer[md]     # command 'twine check'
+wheel                   # command 'setup.py sdist bdist_wheel'
