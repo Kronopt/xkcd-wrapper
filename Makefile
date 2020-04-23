@@ -34,8 +34,8 @@ lint:
 	python -m pylint xkcd_wrapper setup.py
 
 coverage:
-    python -m coverage run --source xkcd_wrapper -m nose2 -s ./tests -t .
-    python -m coverage report -m
+	python -m coverage run --source xkcd_wrapper -m nose2 -s ./tests -t .
+	python -m coverage report -m
 
 docs-test:
 	mkdocs serve -s -f .mkdocs.yml
