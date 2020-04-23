@@ -1,0 +1,16 @@
+# MkDocs configuration file
+
+site_name: xkcd-wrapper
+nav:
+    - Home: 'index.md'
+    - Installation: 'installation.md'
+    - Usage: 'usage.md'
+    - API Specification:
+        - 'client.md'
+        - 'comic.md'
+    - Contributing:
+        - 'contributing.md'
+        - 'contributing_dev_env.md'
+    - Authors: 'authors.md'
+    - History: 'history.md'
+theme: readthedocs
