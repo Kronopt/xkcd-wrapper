@@ -2,7 +2,7 @@
 # coding: utf-8
 
 """
-Project_name setup
+xkcd-wrapper setup
 """
 
 import xkcd_wrapper
@@ -21,7 +21,7 @@ with open('README.md', encoding='utf-8') as readme_md,\
     REQUIREMENTS = [req[:req.find('#')].rstrip() for req in requirements_txt.readlines()]
 
 setup(
-    name='Project_name',
+    name='xkcd-wrapper',
     version=xkcd_wrapper.__version__,
     description='A wrapper for the xkcd API',
     long_description=README + '\n\n' + HISTORY,
@@ -29,7 +29,7 @@ setup(
     license=xkcd_wrapper.__license__,
     author=xkcd_wrapper.__author__,
     url='https://github.com/Kronopt/xkcd-wrapper',
-    project_urls={'Documentation': '<documentation_url>'},  # TODO
+    project_urls={'Documentation': 'https://xkcd-wrapper.readthedocs.io/en/latest/'},
     packages=['xkcd_wrapper'],
     package_dir={'xkcd_wrapper': 'xkcd_wrapper'},
     include_package_data=True,
