@@ -1,0 +1,4 @@
+nose2==0.9.*            # tests
+requests-mock==1.7.*    # tests
+pylint==2.4.*           # style
+coverage==5.*           # coverage
