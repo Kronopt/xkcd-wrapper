@@ -32,8 +32,9 @@ xkcd_wrapper.Comic(100)
 'https://imgs.xkcd.com/comics/family_circus.jpg'
 ```
 
+## Documentation
 Check the documentation for more details: https://xkcd-wrapper.readthedocs.io/en/latest
 
-#### Ideas for the Future
+### Ideas for the Future
 * retrieve comic .jpeg
 * async client
