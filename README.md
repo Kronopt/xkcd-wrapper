@@ -10,7 +10,7 @@
 
 A Python wrapper for the [xkcd webcomic](https://xkcd.com/) API.
 
-Retrieve xkcd comic data and metadata as python objects.
+Retrieves xkcd comic data and metadata as python objects.
 
 ## Installation
 At the command line, with `pip`:
@@ -37,4 +37,3 @@ Check the documentation for more details: https://xkcd-wrapper.readthedocs.io/en
 #### Ideas for the Future
 * retrieve comic .jpeg
 * async client
-
