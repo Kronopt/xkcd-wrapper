@@ -244,3 +244,6 @@ class Client:
                                               parsed['id']) if parsed['id'] is not None else None
 
         return parsed
+
+    def __repr__(self):
+        return 'xkcd_wrapper.Client()'

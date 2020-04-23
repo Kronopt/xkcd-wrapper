@@ -94,3 +94,6 @@ class Comic:
     def explanation(self):
         """explanation property"""
         return self._comic['explanation']
+
+    def __repr__(self):
+        return 'xkcd_wrapper.Comic({})'.format(self.id)
