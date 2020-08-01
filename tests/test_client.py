@@ -6,27 +6,17 @@ Tests for xkcd_wrapper.Client
 """
 
 import datetime
-import json
 import random
 import unittest
 import requests_mock
 import xkcd_wrapper
 from nose2.tools.params import params as nose2_params
-
-
-base_url = 'https://xkcd.com/'
-latest_comic_url = 'https://xkcd.com/info.0.json'
-comic_id_url = 'https://xkcd.com/{}/info.0.json'
-explanation_wiki_url = 'https://www.explainxkcd.com/wiki/index.php/'
-with open('tests/xkcd_api_example_response_628.json') as example_628, \
-     open('tests/xkcd_api_example_response_138.json') as example_138:
-    xkcd_api_example_628_raw = example_628.read()
-    xkcd_api_example_138_raw = example_138.read()
-
-# num is int
-# day, month, year are str
-xkcd_api_example_628_dict = json.loads(xkcd_api_example_628_raw)
-xkcd_api_example_138_dict = json.loads(xkcd_api_example_138_raw)
+from . import (base_url, latest_comic_url, comic_id_url, explanation_wiki_url,
+               xkcd_api_example_628_raw,
+               xkcd_api_example_138_raw,
+               xkcd_api_example_wrong_raw,
+               xkcd_api_example_628_dict,
+               xkcd_api_example_138_dict)
 
 
 class TestClient(unittest.TestCase):
@@ -65,6 +55,20 @@ class TestClient(unittest.TestCase):
             with self.assertRaises(TypeError):
                 c.get([1, 2, 3])
 
+    def test_get_http_error(self):
+        c = xkcd_wrapper.Client()
+        with requests_mock.mock() as mock:
+            mock.get(comic_id_url.format(628), status_code=404)
+            with self.assertRaises(xkcd_wrapper.exceptions.HttpError):
+                c.get(628)
+
+    def test_get_bad_response_fields(self):
+        c = xkcd_wrapper.Client()
+        with requests_mock.mock() as mock:
+            mock.get(comic_id_url.format(628), text=xkcd_api_example_wrong_raw)
+            with self.assertRaises(xkcd_wrapper.exceptions.BadResponseField):
+                c.get(628)
+
     def test_get_latest(self):  # let's assume the example_628 json is the latest comic
         c = xkcd_wrapper.Client()
         with requests_mock.mock() as mock:
@@ -82,12 +86,12 @@ class TestClient(unittest.TestCase):
             mock.get(comic_id_url.format(138), text=xkcd_api_example_138_raw)
             random.seed(1)  # with latest comic being 628, random value will be 138
             response = c.get_random()
-            self.assertEqual(response.id, xkcd_api_example_138_dict['num'])  # is it the random comic?
+            self.assertEqual(response.id, xkcd_api_example_138_dict['num'])
             self.check_comic(response, xkcd_api_example_138_dict)
             # alias
             random.seed(1)
             response = c.random()
-            self.assertEqual(response.id, xkcd_api_example_138_dict['num'])  # is it the random comic?
+            self.assertEqual(response.id, xkcd_api_example_138_dict['num'])
             self.check_comic(response, xkcd_api_example_138_dict)
 
     def check_comic(self, comic, example):
