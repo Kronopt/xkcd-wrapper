@@ -20,5 +20,6 @@ __version__ = '0.1.0'
 
 
 from .client import Client
+from .async_client import AsyncClient
 from .comic import Comic
 from . import exceptions

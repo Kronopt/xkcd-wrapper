@@ -28,7 +28,7 @@ comic = client.get_latest()
 The data is accessible as properties. You can access them like so:
 ```python
 comic.id            # comic number
-comic.data          # date of release
+comic.date          # date of release
 comic.title         # title
 comic.description   # description
 comic.transcript    # dialog and scene transcript

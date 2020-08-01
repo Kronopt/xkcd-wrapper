@@ -158,10 +158,10 @@ class Client:
         xkcd_wrapper.exceptions.HttpError
             If an http code different from 200 is returned
         """
-        # This method has to contact the xkcd API twice: first to get the latest comic id,
-        # and then to get the actual randomized comic.
-        # I could store the id of the latest comic and use that id on subsequent get_random() calls,
-        # but then I would have to handle that id being too old if the client stays up for a long time...
+        # This method has to contact the xkcd API twice: first to get the latest comic id, and then
+        # to get the actual randomized comic.
+        # I could store the id of the latest comic and use it on subsequent get_random() calls, but
+        # then I would have to handle that id being too old if the client stays up for a while...
         latest_comic_id = self._parse_response(self._request_comic(0))['id']
         random_id = random.randint(1, latest_comic_id)
         parsed_response = self._parse_response(self._request_comic(random_id))
@@ -243,15 +243,18 @@ class Client:
             # if int conversion raises ValueError, something came wrong from the API
             if wrapper_value in ('id', 'day', 'month', 'year'):  # int
                 try:
-                    parsed[wrapper_value] = int(json_response[api_value]) if api_value in json_response else None
+                    parsed[wrapper_value] = int(
+                        json_response[api_value]) if api_value in json_response else None
                 except ValueError as err:
                     raise exceptions.BadResponseField(wrapper_value, api_value, err)
 
             # everything converts to str, so no error here
             else:  # str
-                parsed[wrapper_value] = str(json_response[api_value]) if api_value in json_response else None
+                parsed[wrapper_value] = str(
+                    json_response[api_value]) if api_value in json_response else None
 
-        parsed['link'] = self._base_url.format(parsed['id'], '') if parsed['id'] is not None else None
+        parsed['link'] = self._base_url.format(
+            parsed['id'], '') if parsed['id'] is not None else None
         parsed['explanation'] = '{}{}'.format(self._explanation_wiki_url,
                                               parsed['id']) if parsed['id'] is not None else None
 
