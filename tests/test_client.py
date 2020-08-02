@@ -5,13 +5,12 @@
 Tests for xkcd_wrapper.Client
 """
 
-import datetime
 import random
 import unittest
 import requests_mock
 import xkcd_wrapper
 from nose2.tools.params import params as nose2_params
-from . import (base_url, latest_comic_url, comic_id_url, explanation_wiki_url,
+from . import (base_url, latest_comic_url, comic_id_url, check_comic,
                xkcd_api_example_628_raw,
                xkcd_api_example_138_raw,
                xkcd_api_example_wrong_raw,
@@ -49,7 +48,7 @@ class TestClient(unittest.TestCase):
         with requests_mock.mock() as mock:
             mock.get(comic_id_url.format(628), text=xkcd_api_example_628_raw)
             response = c.get(628)
-            self.check_comic(response, xkcd_api_example_628_dict)
+            check_comic(self, response, xkcd_api_example_628_dict)
             with self.assertRaises(TypeError):
                 c.get('')
             with self.assertRaises(TypeError):
@@ -74,10 +73,10 @@ class TestClient(unittest.TestCase):
         with requests_mock.mock() as mock:
             mock.get(latest_comic_url, text=xkcd_api_example_628_raw)
             response = c.get_latest()
-            self.check_comic(response, xkcd_api_example_628_dict)
+            check_comic(self, response, xkcd_api_example_628_dict)
             # alias
             response = c.latest()
-            self.check_comic(response, xkcd_api_example_628_dict)
+            check_comic(self, response, xkcd_api_example_628_dict)
 
     def test_get_random(self):  # let's assume the example_628 json is the latest comic
         c = xkcd_wrapper.Client()
@@ -87,33 +86,13 @@ class TestClient(unittest.TestCase):
             random.seed(1)  # with latest comic being 628, random value will be 138
             response = c.get_random()
             self.assertEqual(response.id, xkcd_api_example_138_dict['num'])
-            self.check_comic(response, xkcd_api_example_138_dict)
+            check_comic(self, response, xkcd_api_example_138_dict)
             # alias
             random.seed(1)
             response = c.random()
             self.assertEqual(response.id, xkcd_api_example_138_dict['num'])
-            self.check_comic(response, xkcd_api_example_138_dict)
+            check_comic(self, response, xkcd_api_example_138_dict)
 
-    def check_comic(self, comic, example):
-        """
-        Assert comic has the required values
-
-        Parameters
-        ----------
-        comic : xkcd_wrapper.Comic
-            Comic
-        example : dict
-            parsed xkcd API example json
-        """
-        date = datetime.date(int(example['year']),
-                             int(example['month']),
-                             int(example['day']))
-
-        self.assertEqual(comic.date, date)
-        self.assertEqual(comic.id, example['num'])
-        self.assertEqual(comic.title, example['safe_title'])
-        self.assertEqual(comic.description, example['alt'])
-        self.assertEqual(comic.transcript, example['transcript'])
-        self.assertEqual(comic.image, example['img'])
-        self.assertEqual(comic.link, '{}{}'.format(base_url, example['num']))
-        self.assertEqual(comic.explanation, '{}{}'.format(explanation_wiki_url, example['num']))
+    def test__repr__(self):
+        c = xkcd_wrapper.Client()
+        self.assertEqual(str(c), 'xkcd_wrapper.Client()')
