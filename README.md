@@ -12,6 +12,8 @@ A Python wrapper for the [xkcd webcomic](https://xkcd.com/) API.
 
 Retrieves xkcd comic data and metadata as python objects.
 
+Asynchronous ([async](https://docs.python.org/3/library/asyncio.html)) and synchronous implementations.
+
 ## Installation
 At the command line, with `pip`:
 ```sh
@@ -21,9 +23,10 @@ $ pip install xkcd-wrapper
 ## Usage
 ```python
 >>> import xkcd_wrapper
+
 >>> client = xkcd_wrapper.Client()
->>> latest_comic = client.get_latest()      # Comic object containing data of the latest xkcd comic
 >>> specific_comic = client.get(100)        # Comic object with comic 100 data
+>>> latest_comic = client.get_latest()      # Comic object containing data of the latest xkcd comic
 >>> random_comic = client.get_random()      # Comic object of a random comic
 
 >>> specific_comic
@@ -32,9 +35,30 @@ xkcd_wrapper.Comic(100)
 'https://imgs.xkcd.com/comics/family_circus.jpg'
 ```
 
+async:
+```python
+>>> import xkcd_wrapper, asyncio
+>>> async_client = xkcd_wrapper.AsyncClient()
+
+>>> async def async_call():
+...     responses = await asyncio.gather(
+...         async_client.get(100),          # Comic object with comic 100 data
+...         async_client.get_latest(),      # Comic object containing data of the latest xkcd comic
+...         async_client.get_random()       # Comic object of a random comic
+...     )
+...     print(
+...         responses[0],                   # async_client.get(100) output
+...         responses[0].image,
+...         sep='\n'
+...     )
+
+>>> asyncio.run(async_call())
+xkcd_wrapper.Comic(100)
+'https://imgs.xkcd.com/comics/family_circus.jpg'
+```
+
 ## Documentation
 Check the documentation for more details: https://xkcd-wrapper.readthedocs.io/en/latest
 
 ### Ideas for the Future
 * retrieve comic .jpeg
-* async client

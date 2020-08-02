@@ -15,8 +15,7 @@ Returns the xkcd API base url
 Client.base_url()
 ```
 
-#### Returns
-**str**
+Returns: **str**
 
 ### latest_comic_url
 Returns the xkcd API url for the latest comic
@@ -24,8 +23,7 @@ Returns the xkcd API url for the latest comic
 Client.latest_comic_url()
 ```
 
-#### Returns
-**str**
+Returns: **str**
 
 ### comic_id_url
 Returns the xkcd API url for a specific comic id
@@ -37,8 +35,7 @@ Client.comic_id_url(comic_id)
 |:---:|:---:|:---:|---|
 | comic_id | int |  | xkcd comic id |
 
-#### Returns
-**str**
+Returns: **str**
 
 ### get
 Retrieves an xkcd comic by id
@@ -50,25 +47,13 @@ Client.get(comic_id)
 |:---:|:---:|:---:|---|
 | comic_id | int |  | xkcd comic id |
 
-#### Returns
-**xkcd_wrapper.Comic**
+Returns: **xkcd_wrapper.Comic**
 
-#### Raises
-**TypeError**
-
-* If `comic_id` is not an `int`
-
-**requests.HTTPError**, **requests.Timeout**
-
-* If an http error or a timeout occurs
-
-**xkcd_wrapper.exceptions.BadResponseField**
-
-* If response contained a field that could not be converted to `int` (after json decode)
-
-**xkcd_wrapper.exceptions.HttpError**
-
-* If an http code different from 200 is returned
+Raises:
+- **TypeError**: If `comic_id` is not an `int`
+- **requests.HTTPError**, **requests.Timeout**: If an http error or a timeout occurs
+- **xkcd_wrapper.exceptions.BadResponseField**: If response contained a field that could not be converted to `int` (after json decode)
+- **xkcd_wrapper.exceptions.HttpError**: If an http code different from 200 is returned
 
 ### get_latest
 Retrieves the latest xkcd comic
@@ -77,21 +62,12 @@ Client.get_latest()
 Client.latest()
 ```
 
-#### Returns
-**xkcd_wrapper.Comic**
+Returns: **xkcd_wrapper.Comic**
 
-#### Raises
-**requests.HTTPError**, **requests.Timeout**
-
-* If an http error or a timeout occurs
-
-**xkcd_wrapper.exceptions.BadResponseField**
-
-* If response contained a field that could not be converted to `int` (after json decode)
-
-**xkcd_wrapper.exceptions.HttpError**
-
-* If an http code different from 200 is returned
+Raises:
+- **requests.HTTPError**, **requests.Timeout**: If an http error or a timeout occurs
+- **xkcd_wrapper.exceptions.BadResponseField**: If response contained a field that could not be converted to `int` (after json decode)
+- **xkcd_wrapper.exceptions.HttpError**: If an http code different from 200 is returned
 
 ### get_random
 Retrieves a random xkcd comic
@@ -102,21 +78,12 @@ Client.get_random()
 Client.random()
 ```
 
-#### Returns
-**xkcd_wrapper.Comic**
+Returns: **xkcd_wrapper.Comic**
 
-#### Raises
-**requests.HTTPError**, **requests.Timeout**
-
-* If an http error or a timeout occurs
-
-**xkcd_wrapper.exceptions.BadResponseField**
-
-* If response contained a field that could not be converted to `int` (after json decode)
-
-**xkcd_wrapper.exceptions.HttpError**
-
-* If an http code different from 200 is returned
+Raises:
+- **requests.HTTPError**, **requests.Timeout**: If an http error or a timeout occurs
+- **xkcd_wrapper.exceptions.BadResponseField**: If response contained a field that could not be converted to `int` (after json decode)
+- **xkcd_wrapper.exceptions.HttpError**: If an http code different from 200 is returned
 
 ## Special Methods
 * \_\_repr__
