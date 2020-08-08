@@ -7,6 +7,7 @@ nav:
     - Usage: 'usage.md'
     - API Specification:
         - 'client.md'
+        - 'client-async.md'
         - 'comic.md'
     - Contributing:
         - 'contributing.md'

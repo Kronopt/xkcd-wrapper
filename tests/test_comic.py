@@ -122,3 +122,8 @@ class TestComic(unittest.TestCase):
         c = xkcd_wrapper.Comic(xkcd_dict)
         self.assertEqual(c.date, c._comic['date'])
         self.assertIsNone(c.date)
+
+    @nose2_params(test_dict)
+    def test__repr__(self, xkcd_dict):
+        c = xkcd_wrapper.Comic(xkcd_dict)
+        self.assertEqual(str(c), 'xkcd_wrapper.Comic(10)')
