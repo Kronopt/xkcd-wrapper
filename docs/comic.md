@@ -4,7 +4,7 @@ xkcd comic representation
 A `Comic` represents a single xkcd comic. `xkcd_wrapper.Client` generates `Comic` objects
 
 ## Parameters
-The `Comic` class can be instantiated with the following parameters
+The `Comic` class can be instantiated with the following parameters:
 ```Python
 Comic(xkcd_dict)
 ```

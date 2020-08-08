@@ -27,7 +27,8 @@ class HttpError(XkcdWrapperException):
         self.message = message
 
     def __str__(self):
-        return 'Received HTTP status code {}: {}. Expected 200: OK'.format(self.status_code, self.message)
+        return 'Received HTTP status code {}: {}. Expected 200: OK'.format(self.status_code,
+                                                                           self.message)
 
 
 class BadResponseField(XkcdWrapperException):
@@ -42,6 +43,7 @@ class BadResponseField(XkcdWrapperException):
         self.wrong_field = str(original_error).split(':', maxsplit=1)[1][2:-1]
 
     def __str__(self):
-        return 'Xkcd API returned a non int value on the "{}" field (for wrapper "{}" field): "{}". ' \
-               'Please report this issue on GitHub: https://github.com/Kronopt/xkcd-wrapper'.format(
+        return 'Xkcd API returned a non int value on the "{}" field (for wrapper "{}" field): ' \
+               '"{}". Please report this issue on GitHub: ' \
+               'https://github.com/Kronopt/xkcd-wrapper'.format(
                    self.api_field, self.wrapper_field, self.wrong_field)

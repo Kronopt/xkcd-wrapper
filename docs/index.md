@@ -11,3 +11,5 @@
 A Python wrapper for the [xkcd webcomic](https://xkcd.com/) API.
 
 Retrieves xkcd comic data and metadata as python objects.
+
+Asynchronous ([async](https://docs.python.org/3/library/asyncio.html)) and synchronous implementations.
