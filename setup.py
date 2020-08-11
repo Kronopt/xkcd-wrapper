@@ -18,7 +18,17 @@ with open('README.md', encoding='utf-8') as readme_md,\
         open('requirements.txt', encoding='utf-8') as requirements_txt:
     README = readme_md.read()
     HISTORY = history_md.read()
-    REQUIREMENTS = [req[:req.find('#')].rstrip() for req in requirements_txt.readlines()]
+
+    REQUIREMENTS = []
+    REQUIREMENTS_EXTRA = {}
+    for req in requirements_txt.readlines():
+        req = req[:req.find('#')].rstrip()  # remove comments
+        if req.startswith("requests"):
+            REQUIREMENTS_EXTRA["requests"] = req
+        elif req.startswith("aiohttp"):
+            REQUIREMENTS_EXTRA["aiohttp"] = req
+        else:
+            REQUIREMENTS.append(req)
 
 setup(
     name='xkcd-wrapper',
@@ -34,6 +44,10 @@ setup(
     package_dir={'xkcd_wrapper': 'xkcd_wrapper'},
     include_package_data=True,
     install_requires=REQUIREMENTS,
+    extras_require={
+        "sync":  [REQUIREMENTS_EXTRA["requests"]],
+        "async": [REQUIREMENTS_EXTRA["aiohttp"]],
+    },
     zip_safe=False,
     keywords='xkcd wrapper xkcd-wrapper',
     classifiers=[
