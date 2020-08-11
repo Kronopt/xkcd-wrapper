@@ -15,12 +15,21 @@ Retrieves xkcd comic data and metadata as python objects.
 Asynchronous ([async](https://docs.python.org/3/library/asyncio.html)) and synchronous implementations.
 
 ## Installation
-At the command line, with `pip`:
+At the command line, with `pip`,
+
+synchronous implementation:
 ```sh
-$ pip install xkcd-wrapper
+$ pip install xkcd-wrapper[sync]
+```
+
+async implementation:
+```sh
+$ pip install xkcd-wrapper[async]
 ```
 
 ## Usage
+
+synchronous:
 ```python
 >>> import xkcd_wrapper
 
