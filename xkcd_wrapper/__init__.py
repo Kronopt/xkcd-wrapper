@@ -30,20 +30,20 @@ __license__ = 'GPLv3'
 __version__ = '0.2.2a'
 
 
-requests_installed = True
-aiohttp_installed = True
+REQUESTS_INSTALLED = True
+AIOHTTP_INSTALLED = True
 
 try:
     from .client import Client
 except ModuleNotFoundError:
-    requests_installed = False
+    REQUESTS_INSTALLED = False
 
 try:
     from .async_client import AsyncClient
 except ModuleNotFoundError:
-    aiohttp_installed = False
+    AIOHTTP_INSTALLED = False
 
-if not any([requests_installed, aiohttp_installed]):
+if not any([REQUESTS_INSTALLED, AIOHTTP_INSTALLED]):
     raise ModuleNotFoundError(
         'Neither \'requests\' nor \'aiohttp\' are installed. '
         'xkcd-wrapper needs at least one of those dependencies to work. '
