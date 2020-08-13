@@ -39,7 +39,8 @@ comic.explanation   # xkcd explanation wiki url
 
 ### Async implementation
 
-The `AsyncClient`can be used in much the same way as `Client`. After importing `xkcd_wrapper`, instantiate the `AsyncClient`:
+The `AsyncClient`can be used in much the same way as `Client`. After importing `xkcd_wrapper`,
+instantiate the `AsyncClient`:
 ```python
 async_client = xkcd_wrapper.AsyncClient() 
 ```
