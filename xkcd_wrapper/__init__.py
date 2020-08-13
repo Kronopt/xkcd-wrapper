@@ -27,10 +27,28 @@ Async Usage:
 __author__ = 'Pedro HC David, https://github.com/Kronopt'
 __credits__ = ['Pedro HC David']
 __license__ = 'GPLv3'
-__version__ = '0.2.1'
+__version__ = '0.2.2'
 
 
-from .client import Client
-from .async_client import AsyncClient
+REQUESTS_INSTALLED = True
+AIOHTTP_INSTALLED = True
+
+try:
+    from .client import Client
+except ModuleNotFoundError:
+    REQUESTS_INSTALLED = False
+
+try:
+    from .async_client import AsyncClient
+except ModuleNotFoundError:
+    AIOHTTP_INSTALLED = False
+
+if not any([REQUESTS_INSTALLED, AIOHTTP_INSTALLED]):
+    raise ModuleNotFoundError(
+        'Neither \'requests\' nor \'aiohttp\' are installed. '
+        'xkcd-wrapper needs at least one of those dependencies to work. '
+        'Use the correct pip command to install the necessary dependencies '
+        '(please refer to the xkcd-wrapper documentation).')
+
 from .comic import Comic
 from . import exceptions

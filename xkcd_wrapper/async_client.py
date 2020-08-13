@@ -7,12 +7,12 @@ xkcd-wrapper Async Client
 
 import random
 import aiohttp
-from .client import Client
+from .base_client import BaseClient
 from .comic import Comic
 from . import exceptions
 
 
-class AsyncClient(Client):
+class AsyncClient(BaseClient):
     """
     AsyncClient asynchronously communicates with the xkcd API, parses its response and generates
     Comic objects
@@ -92,6 +92,9 @@ class AsyncClient(Client):
         """
         return await self.get(0)  # comic_id of 0 requests latest comic
 
+    # get_latest alias
+    latest = get_latest
+
     async def get_random(self):
         """
         Asynchronously retrieves a random xkcd comic
@@ -117,6 +120,9 @@ class AsyncClient(Client):
         random_id = random.randint(1, latest_comic_id)
         parsed_response = self._parse_response(await self._request_comic(random_id))
         return Comic(parsed_response)
+
+    # get_random alias
+    random = get_random
 
     async def _request_comic(self, comic_id):
         """
