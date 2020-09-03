@@ -12,118 +12,75 @@ from nose2.tools.params import params as nose2_params
 
 
 test_dict = {
-    'id':           10,
-    'title':        'test title',
-    'description':  'test description',
-    'transcript':   'test transcript',
-    'image':        'http://test_image_url',
-    'link':         'http://test_comic_url',
-    'explanation':  'http://test_explanation_url',
-    'day':          10,
-    'month':        2,
+    'month':         2,
+    'num':           10,
+    'link':          '',
     'year':         2020,
+    'news':         '',
+    'safe_title':   'test title',
+    'transcript':   'test transcript',
+    'alt':          'test description',
+    'img':          'http://test_image_url.png',
+    'title':        'test unused title',
+    'day':          10,
 }
-test_dict_none = {key: None for key in test_dict}   # same dict but all None values
+test_dict_missing_values = {
+    'link': '',
+    'year': 2020,
+    'news': '',
+    'title': 'test unused title',
+    'day': 10,
+}
+
+raw_image = b'test_image.png'
+comic_url = 'http://test_comic_url'
+explanation_url = 'http://test_explanation_url'
 
 
 class TestComic(unittest.TestCase):
 
-    @nose2_params(test_dict, test_dict_none)
-    def test_comic_init(self, xkcd_dict):
-        c = xkcd_wrapper.Comic(xkcd_dict)
+    @nose2_params(test_dict, test_dict_missing_values)
+    def test_comic(self, xkcd_dict):
+        c = xkcd_wrapper.Comic(xkcd_dict, raw_image, comic_url, explanation_url)
         self.assertIsInstance(c, xkcd_wrapper.Comic)
-        self.assertIsInstance(c._comic, dict)
 
-    @nose2_params(test_dict, test_dict_none)
-    def test_id(self, xkcd_dict):
-        c = xkcd_wrapper.Comic(xkcd_dict)
-        self.assertEqual(c._comic['id'], xkcd_dict['id'])
-        self.assertEqual(c.id, xkcd_dict['id'])
-        if c.id is not None:
-            self.assertIsInstance(c.id, int)
+        # id
+        self.assertEqual(c.id, xkcd_dict.get('num'))
 
-    @nose2_params(test_dict, test_dict_none)
-    def test_title(self, xkcd_dict):
-        c = xkcd_wrapper.Comic(xkcd_dict)
-        self.assertEqual(c._comic['title'], xkcd_dict['title'])
-        self.assertEqual(c.title, xkcd_dict['title'])
-        if c.title is not None:
-            self.assertIsInstance(c.title, str)
+        # date
+        if all([xkcd_dict.get('year'), xkcd_dict.get('month'), xkcd_dict.get('day')]):
+            self.assertEqual(c.date, datetime.date(2020, 2, 10))
+        else:
+            self.assertIsNone(c.date)
 
-    @nose2_params(test_dict, test_dict_none)
-    def test_description(self, xkcd_dict):
-        c = xkcd_wrapper.Comic(xkcd_dict)
-        self.assertEqual(c._comic['description'], xkcd_dict['description'])
-        self.assertEqual(c.description, xkcd_dict['description'])
-        if c.description is not None:
-            self.assertIsInstance(c.description, str)
+        # title
+        self.assertEqual(c.title, xkcd_dict.get('safe_title'))
 
-    @nose2_params(test_dict, test_dict_none)
-    def test_transcript(self, xkcd_dict):
-        c = xkcd_wrapper.Comic(xkcd_dict)
-        self.assertEqual(c._comic['transcript'], xkcd_dict['transcript'])
-        self.assertEqual(c.transcript, xkcd_dict['transcript'])
-        if c.transcript is not None:
-            self.assertIsInstance(c.transcript, str)
+        # description
+        self.assertEqual(c.description, xkcd_dict.get('alt'))
 
-    @nose2_params(test_dict, test_dict_none)
-    def test_image(self, xkcd_dict):
-        c = xkcd_wrapper.Comic(xkcd_dict)
-        self.assertEqual(c._comic['image'], xkcd_dict['image'])
-        self.assertEqual(c.image, xkcd_dict['image'])
-        if c.image is not None:
-            self.assertIsInstance(c.image, str)
+        # transcript
+        self.assertEqual(c.transcript, xkcd_dict.get('transcript'))
 
-    @nose2_params(test_dict, test_dict_none)
-    def test_link(self, xkcd_dict):
-        c = xkcd_wrapper.Comic(xkcd_dict)
-        self.assertEqual(c._comic['link'], xkcd_dict['link'])
-        self.assertEqual(c.link, xkcd_dict['link'])
-        if c.link is not None:
-            self.assertIsInstance(c.link, str)
+        # image
+        self.assertEqual(c.image, raw_image)
 
-    @nose2_params(test_dict, test_dict_none)
-    def test_explanation(self, xkcd_dict):
-        c = xkcd_wrapper.Comic(xkcd_dict)
-        self.assertEqual(c._comic['explanation'], xkcd_dict['explanation'])
-        self.assertEqual(c.explanation, xkcd_dict['explanation'])
-        if c.explanation is not None:
-            self.assertIsInstance(c.explanation, str)
+        # image_extension
+        if c.image_url:
+            self.assertEqual(c.image_extension, 'png')
+        else:
+            self.assertIsNone(c.image_extension)
 
-    @nose2_params(test_dict)
-    def test_date(self, xkcd_dict):
-        c = xkcd_wrapper.Comic(xkcd_dict)
-        self.assertEqual(c.date, c._comic['date'])
-        self.assertIsInstance(c.date, datetime.date)
+        # image_url
+        self.assertEqual(c.image_url, xkcd_dict.get('img'))
 
-        # day is None
-        xkcd_dict['day'] = None
-        c = xkcd_wrapper.Comic(xkcd_dict)
-        self.assertEqual(c.date, c._comic['date'])
-        self.assertIsNone(c.date)
+        # comic_url
+        self.assertEqual(c.comic_url, comic_url)
 
-        # month is None
-        xkcd_dict['day'] = 10
-        xkcd_dict['month'] = None
-        c = xkcd_wrapper.Comic(xkcd_dict)
-        self.assertEqual(c.date, c._comic['date'])
-        self.assertIsNone(c.date)
+        # explanation_url
+        self.assertEqual(c.explanation_url, explanation_url)
 
-        # year is None
-        xkcd_dict['month'] = 2
-        xkcd_dict['year'] = None
-        c = xkcd_wrapper.Comic(xkcd_dict)
-        self.assertEqual(c.date, c._comic['date'])
-        self.assertIsNone(c.date)
-
-        # all 3 are None
-        xkcd_dict['day'] = None
-        xkcd_dict['month'] = None
-        c = xkcd_wrapper.Comic(xkcd_dict)
-        self.assertEqual(c.date, c._comic['date'])
-        self.assertIsNone(c.date)
-
-    @nose2_params(test_dict)
-    def test__repr__(self, xkcd_dict):
-        c = xkcd_wrapper.Comic(xkcd_dict)
-        self.assertEqual(str(c), 'xkcd_wrapper.Comic(10)')
+        if c.id:
+            self.assertEqual(str(c), 'xkcd_wrapper.Comic(10)')
+        else:
+            self.assertEqual(str(c), 'xkcd_wrapper.Comic(None)')

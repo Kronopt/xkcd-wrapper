@@ -25,75 +25,48 @@ class Comic:
         comic description
     transcript : str or None
         comic transcript
-    image : str or None
-        image url
-    link : str or None
+    image : bytes or None
+        raw comic image
+    image_extension : str or None
+        comic image extension (ex: .png, .jpeg)
+    image_url : str or None
+        comic image url
+    comic_url : str or None
         comic url
-    explanation : str or None
+    explanation_url : str or None
         url to explainxkcd wiki
     """
 
-    def __init__(self, xkcd_dict):
+    def __init__(self, xkcd_dict, raw_image=None, comic_url=None, explanation_url=None):
         """
         Comic init
 
         Parameters
         ----------
         xkcd_dict : dict
-            parsed json obtained from xkcd API
+            parsed json obtained from xkcd API (all fields are assumed to be the correct type)
+        raw_image : bytes or None
+            raw comic image
+        comic_url : str or None
+            comic url
+        explanation_url : str or None
+            url to explainxkcd wiki
         """
-        self._comic = dict()
-        self._comic['id'] = xkcd_dict['id']
-        self._comic['title'] = xkcd_dict['title']
-        self._comic['description'] = xkcd_dict['description']
-        self._comic['transcript'] = xkcd_dict['transcript']
-        self._comic['image'] = xkcd_dict['image']
-        self._comic['link'] = xkcd_dict['link']
-        self._comic['explanation'] = xkcd_dict['explanation']
-        if all([xkcd_dict['year'], xkcd_dict['month'], xkcd_dict['day']]):
-            self._comic['date'] = datetime.date(xkcd_dict['year'], xkcd_dict['month'], xkcd_dict['day'])
-        else:
-            self._comic['date'] = None
+        self.id = xkcd_dict.get('num')
+        self.title = xkcd_dict.get('safe_title')
+        self.description = xkcd_dict.get('alt')
+        self.transcript = xkcd_dict.get('transcript')
+        self.image = raw_image
+        self.image_url = xkcd_dict.get('img')
+        self.comic_url = comic_url
+        self.explanation_url = explanation_url
 
-    @property
-    def id(self):
-        """id property"""
-        return self._comic['id']
+        day = xkcd_dict.get('day')
+        month = xkcd_dict.get('month')
+        year = xkcd_dict.get('year')
+        self.date = datetime.date(year, month, day) if all([year, month, day]) else None
 
-    @property
-    def date(self):
-        """date property"""
-        return self._comic['date']
-
-    @property
-    def title(self):
-        """title property"""
-        return self._comic['title']
-
-    @property
-    def description(self):
-        """description property"""
-        return self._comic['description']
-
-    @property
-    def transcript(self):
-        """transcript property"""
-        return self._comic['transcript']
-
-    @property
-    def image(self):
-        """image property"""
-        return self._comic['image']
-
-    @property
-    def link(self):
-        """link property"""
-        return self._comic['link']
-
-    @property
-    def explanation(self):
-        """explanation property"""
-        return self._comic['explanation']
+        self.image_extension = self.image_url.rsplit('.', maxsplit=1)[1] if self.image_url else None
 
     def __repr__(self):
         return 'xkcd_wrapper.Comic({})'.format(self.id)

@@ -68,6 +68,3 @@ xkcd_wrapper.Comic(100)
 
 ## Documentation
 Check the documentation for more details: https://xkcd-wrapper.readthedocs.io/en/latest
-
-### Ideas for the Future
-* retrieve comic .jpeg
