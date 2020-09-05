@@ -32,7 +32,7 @@ test_dict_missing_values = {
     'day': 10,
 }
 
-raw_image = b'test_image.png'
+raw_image = b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x08\x02\x00\x00\x00\x90wS\xde\x00\x00\x00\x01sRGB\x00\xae\xce\x1c\xe9\x00\x00\x00\x04gAMA\x00\x00\xb1\x8f\x0b\xfca\x05\x00\x00\x00\tpHYs\x00\x00\x16%\x00\x00\x16%\x01IR$\xf0\x00\x00\x00\x0cIDAT\x18Wc\xf8\xff\xff?\x00\x05\xfe\x02\xfe\xa75\x81\x84\x00\x00\x00\x00IEND\xaeB`\x82'
 comic_url = 'http://test_comic_url'
 explanation_url = 'http://test_explanation_url'
 
@@ -66,10 +66,7 @@ class TestComic(unittest.TestCase):
         self.assertEqual(c.image, raw_image)
 
         # image_extension
-        if c.image_url:
-            self.assertEqual(c.image_extension, 'png')
-        else:
-            self.assertIsNone(c.image_extension)
+        self.assertEqual(c.image_extension, 'png')
 
         # image_url
         self.assertEqual(c.image_url, xkcd_dict.get('img'))

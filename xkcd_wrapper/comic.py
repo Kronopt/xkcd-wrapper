@@ -6,6 +6,7 @@ xkcd-wrapper Comic
 """
 
 import datetime
+import imghdr
 
 
 class Comic:
@@ -53,20 +54,46 @@ class Comic:
             url to explainxkcd wiki
         """
         self.id = xkcd_dict.get('num')
+        self.date = self._determine_date(xkcd_dict)
         self.title = xkcd_dict.get('safe_title')
         self.description = xkcd_dict.get('alt')
         self.transcript = xkcd_dict.get('transcript')
         self.image = raw_image
+        self.image_extension = self._determine_image_extension()
         self.image_url = xkcd_dict.get('img')
         self.comic_url = comic_url
         self.explanation_url = explanation_url
 
+    @staticmethod
+    def _determine_date(xkcd_dict):
+        """
+        Determine date of xkcd comic
+
+        Parameters
+        ----------
+        xkcd_dict : dict
+            parsed json obtained from xkcd API (all fields are assumed to be the correct type)
+
+        Returns
+        -------
+        datetime.date or None
+            date when comic was released
+        """
         day = xkcd_dict.get('day')
         month = xkcd_dict.get('month')
         year = xkcd_dict.get('year')
-        self.date = datetime.date(year, month, day) if all([year, month, day]) else None
+        return datetime.date(year, month, day) if all([year, month, day]) else None
 
-        self.image_extension = self.image_url.rsplit('.', maxsplit=1)[1] if self.image_url else None
+    def _determine_image_extension(self):
+        """
+        Determine the extension of the xkcd comic image (ex: .png, .jpeg)
+
+        Returns
+        -------
+        str or None
+            image extension
+        """
+        return imghdr.what(None, self.image) if self.image else None
 
     def __repr__(self):
         return 'xkcd_wrapper.Comic({})'.format(self.id)
