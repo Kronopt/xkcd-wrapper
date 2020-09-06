@@ -8,7 +8,6 @@ xkcd-wrapper Async Client
 import random
 import aiohttp
 from .base_client import BaseClient
-from .comic import Comic
 from . import exceptions
 
 

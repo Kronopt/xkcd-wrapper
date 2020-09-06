@@ -8,7 +8,6 @@ xkcd-wrapper Client
 import random
 import requests
 from .base_client import BaseClient
-from .comic import Comic
 from . import exceptions
 
 
