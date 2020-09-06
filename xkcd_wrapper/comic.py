@@ -64,6 +64,18 @@ class Comic:
         self.comic_url = comic_url
         self.explanation_url = explanation_url
 
+    def update_raw_image(self, raw_image):
+        """
+        Updates raw_image and image_extension
+
+        Parameters
+        ----------
+        raw_image : bytes or None
+            raw comic image
+        """
+        self.image = raw_image
+        self.image_extension = self._determine_image_extension()
+
     @staticmethod
     def _determine_date(xkcd_dict):
         """

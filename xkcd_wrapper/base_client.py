@@ -6,7 +6,7 @@ xkcd-wrapper BaseClient
 """
 
 import json
-from . import Comic
+from .comic import Comic
 from . import exceptions
 
 
@@ -105,7 +105,7 @@ class BaseClient:
         for api_value, wrapper_value in self._response_int_values.items():
             try:
                 response_dict[api_value] = int(response_dict[api_value])
-            except TypeError as err:
+            except ValueError as err:
                 raise exceptions.BadResponseField(wrapper_value, api_value, err)
 
         comic_url = self._base_url.format(response_dict['num'], '')
