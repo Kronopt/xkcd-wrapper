@@ -20,21 +20,25 @@ Then you can use one of the available methods to retrieve xkcd comics:
 * `get_random()` -> retrieves a random comic (can also be called as just `random()`)
 
 All methods return a `Comic` object which contains the structured xkcd comic data.
+Each of these methods also take a boolean keyword argument `raw_comic_image` (defaults to True), which is a boolean
+indicating if the raw comic image should be retrieved or not (retrieving the image implies another http request). 
 
 ```python
-comic = client.get_latest()
+comic = client.get(comic_id, raw_comic_image=True)
 ```
 
-The data is accessible as properties. You can access them like so:
+You can access the xkcd comic data like so:
 ```python
-comic.id            # comic number
-comic.date          # date of release
-comic.title         # title
-comic.description   # description
-comic.transcript    # dialog and scene transcript
-comic.image         # image url
-comic.link          # comic webpage url
-comic.explanation   # xkcd explanation wiki url
+comic.id                # comic number
+comic.date              # date of release
+comic.title             # title
+comic.description       # description
+comic.transcript        # dialog and scene transcript
+comic.image             # raw comic image
+comic.image_extension   # comic image extension (ex: .png, .jpeg)
+comic.image_url         # comic image url
+comic.comic_url         # comic webpage url
+comic.explanation       # xkcd explanation wiki url
 ```
 
 ### Async implementation
@@ -45,7 +49,7 @@ instantiate the `AsyncClient`:
 async_client = xkcd_wrapper.AsyncClient() 
 ```
 
-Then the same methods are available as for `Client`, but they are all async:
+Then the same methods with the same parameters are available as for `Client`, but they are all async:
 
 * `get(<id>)` -> retieves comic by id
 * `get_latest()` -> retrieves the latest comic (can also be called as just `latest()`)

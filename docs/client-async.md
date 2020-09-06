@@ -39,13 +39,14 @@ Returns: **str**
 
 ### async get
 ```Python
-AsyncClient.get(comic_id)
+AsyncClient.get(comic_id, raw_comic_image=True)
 ```
 Retrieves an xkcd comic by id
 
 | Parameter | Type / Value | Default | Description |
 |:---:|:---:|:---:|---|
 | comic_id | int |  | xkcd comic id |
+| raw_comic_image | bool | True | Indicates if raw comic image should be retrieved or not (implies an extra http request) |
 
 Returns: **xkcd_wrapper.Comic**
 
@@ -57,10 +58,14 @@ Raises:
 
 ### async get_latest
 ```Python
-AsyncClient.get_latest()
-AsyncClient.latest()
+AsyncClient.get_latest(raw_comic_image=True)
+AsyncClient.latest(raw_comic_image=True)
 ```
 Retrieves the latest xkcd comic
+
+| Parameter | Type / Value | Default | Description |
+|:---:|:---:|:---:|---|
+| raw_comic_image | bool | True | Indicates if raw comic image should be retrieved or not (implies an extra http request) |
 
 Returns: **xkcd_wrapper.Comic**
 
@@ -71,11 +76,15 @@ Raises:
 
 ### async get_random
 ```Python
-AsyncClient.get_random()
-AsyncClient.random()
+AsyncClient.get_random(raw_comic_image=True)
+AsyncClient.random(raw_comic_image=True)
 ```
 Retrieves a random xkcd comic.
 Contacts the xkcd API twice: once to know how many comics there are and another to fetch a random comic
+
+| Parameter | Type / Value | Default | Description |
+|:---:|:---:|:---:|---|
+| raw_comic_image | bool | True | Indicates if raw comic image should be retrieved or not (implies an extra http request) |
 
 Returns: **xkcd_wrapper.Comic**
 
