@@ -6,6 +6,7 @@ xkcd-wrapper BaseClient
 """
 
 import json
+from . import Comic
 from . import exceptions
 
 
@@ -22,6 +23,7 @@ class BaseClient:
         self._base_url = 'https://xkcd.com/{}{}'
         self._api = 'info.0.json'
         self._explanation_wiki_url = 'https://www.explainxkcd.com/wiki/index.php/'
+        self._response_int_values = {'num': 'id', 'year': 'date', 'month': 'date', 'day': 'date'}
 
     def base_url(self):
         """
@@ -63,7 +65,7 @@ class BaseClient:
 
     def _parse_response(self, response):
         """
-        Parses xkcd API response
+        Parses the xkcd API response into a Comic object
 
         Parameters
         ----------
@@ -72,48 +74,41 @@ class BaseClient:
 
         Returns
         -------
-        dict
-            relevant fields, extracted from xkcd API response, plus some extra ones
+        Comic
 
         Raises
         ------
         xkcd_wrapper.exceptions.BadResponseField
-            If response contained a field that could not be converted to int (after json decode)
+            If response contained a field that could not be converted to int after json decode
         """
-        # relation between xkcd-wrapper fields and xkcd API fields
-        fields_relationship = {
-            'id': 'num',
-            'day': 'day',
-            'month': 'month',
-            'year': 'year',
-            'title': 'safe_title',
-            'description': 'alt',
-            'transcript': 'transcript',
-            'image': 'img',
-        }
+        return json.loads(response, object_hook=self._json_to_comic)
 
-        json_response = json.loads(response)
+    def _json_to_comic(self, response_dict):
+        """
+        json.loads() object_hook function
 
-        # all values default to None to avoid errors if the xkcd API returns missing data
-        parsed = dict()
+        Parameters
+        ----------
+        response_dict : dict
+            xkcd API response as parsed by json.loads()
 
-        for wrapper_value, api_value in fields_relationship.items():
-            # if int conversion raises ValueError, something came wrong from the API
-            if wrapper_value in ('id', 'day', 'month', 'year'):  # int
-                try:
-                    parsed[wrapper_value] = int(
-                        json_response[api_value]) if api_value in json_response else None
-                except ValueError as err:
-                    raise exceptions.BadResponseField(wrapper_value, api_value, err)
+        Returns
+        -------
+        Comic
 
-            # everything converts to str, so no error here
-            else:  # str
-                parsed[wrapper_value] = str(
-                    json_response[api_value]) if api_value in json_response else None
+        Raises
+        ------
+        xkcd_wrapper.exceptions.BadResponseField
+            If response_dict contained a field that could not be converted to int after json decode
+        """
+        # convert date values to int and ensure num is int
+        for api_value, wrapper_value in self._response_int_values.items():
+            try:
+                response_dict[api_value] = int(response_dict[api_value])
+            except TypeError as err:
+                raise exceptions.BadResponseField(wrapper_value, api_value, err)
 
-        parsed['link'] = self._base_url.format(
-            parsed['id'], '') if parsed['id'] is not None else None
-        parsed['explanation'] = '{}{}'.format(self._explanation_wiki_url,
-                                              parsed['id']) if parsed['id'] is not None else None
+        comic_url = self._base_url.format(response_dict['num'], '')
+        explanation_url = '{}{}'.format(self._explanation_wiki_url, response_dict['num'])
 
-        return parsed
+        return Comic(response_dict, comic_url=comic_url, explanation_url=explanation_url)
