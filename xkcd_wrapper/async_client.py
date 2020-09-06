@@ -65,12 +65,9 @@ class AsyncClient(BaseClient):
         xkcd_wrapper.exceptions.HttpError
             If an http code different from 200 is returned
         """
-        if isinstance(comic_id, int):
-            parsed_response = self._parse_response(await self._request_comic(comic_id))
-        else:
+        if not isinstance(comic_id, int):
             raise TypeError('\'comic_id\' parameter must be an int.')
-
-        return Comic(parsed_response)
+        return self._parse_response(await self._request_comic(comic_id))
 
     async def get_latest(self):
         """
@@ -116,10 +113,9 @@ class AsyncClient(BaseClient):
         # this calls _request_comic twice (using 2 different sessions)
         # could work around this by passing a session to the _request_comic method, but will leave
         # this like it is as to not alter _request_comic method signature
-        latest_comic_id = self._parse_response(await self._request_comic(0))['id']
+        latest_comic_id = self._parse_response(await self._request_comic(0)).id
         random_id = random.randint(1, latest_comic_id)
-        parsed_response = self._parse_response(await self._request_comic(random_id))
-        return Comic(parsed_response)
+        return self._parse_response(await self._request_comic(random_id))
 
     # get_random alias
     random = get_random
