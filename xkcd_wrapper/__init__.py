@@ -27,7 +27,7 @@ Async Usage:
 __author__ = 'Pedro HC David, https://github.com/Kronopt'
 __credits__ = ['Pedro HC David']
 __license__ = 'GPLv3'
-__version__ = '1.0.0a'
+__version__ = '1.0.0'
 
 
 REQUESTS_INSTALLED = True
