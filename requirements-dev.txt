@@ -1,10 +1,10 @@
-nose2==0.9.*            # tests
-requests-mock==1.7.*    # tests, Client
-aioresponses==0.6.*     # tests, AsyncClient
-pylint==2.4.*           # style
-coverage==5.1.*         # coverage
-mkdocs==1.1.*           # docs
-twine                   # pypi tools
-pyOpenSSL               # twine dependency
-readme_renderer[md]     # command 'twine check'
-wheel                   # command 'setup.py sdist bdist_wheel'
+nose2==0.9.*                    # tests
+requests-mock==1.7.*            # tests, Client
+aioresponses==0.6.*             # tests, AsyncClient
+pylint==2.6.*                   # style
+coverage==5.1.*                 # coverage
+mkdocs==1.1.*                   # docs
+twine==3.1.*                    # pypi tools
+pyOpenSSL==19.1.*               # twine dependency
+readme_renderer[md]==26.0.*     # command 'twine check'
+wheel==0.34.*                   # command 'setup.py sdist bdist_wheel'
