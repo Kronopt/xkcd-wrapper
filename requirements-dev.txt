@@ -1,6 +1,6 @@
 nose2==0.9.*                    # tests
 requests-mock==1.7.*            # tests, Client
-aioresponses==0.6.*             # tests, AsyncClient
+aioresponses==0.7.*             # tests, AsyncClient
 pylint==2.6.*                   # style
 coverage==5.1.*                 # coverage
 mkdocs==1.1.*                   # docs

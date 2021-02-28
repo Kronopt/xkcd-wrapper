@@ -1,2 +1,2 @@
-aiohttp==3.7.3
-requests==2.23.*
+aiohttp>=3.7.3,<3.8
+requests>=2.23.*,<2.25.*
