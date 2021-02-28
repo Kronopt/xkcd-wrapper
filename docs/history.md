@@ -1,5 +1,10 @@
 # History
 
+### 1.0.1 (28-02-2021)
+* Deprecate Python 3.5
+* Support Python 3.9
+* Update dependencies
+
 ### 1.0.0 (06-09-2020)
 * Reworked xkcd API response json decoding
 * Reworked `Comic`
