@@ -41,7 +41,7 @@ synchronous:
 
 >>> specific_comic
 xkcd_wrapper.Comic(100)
->>> specific_comic.image
+>>> specific_comic.image_url
 'https://imgs.xkcd.com/comics/family_circus.jpg'
 ```
 
@@ -58,7 +58,7 @@ async:
 ...     )
 ...     print(
 ...         responses[0],                   # async_client.get(100) output
-...         responses[0].image,
+...         responses[0].image_url,
 ...         sep='\n'
 ...     )
 
