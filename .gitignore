@@ -5,8 +5,9 @@ build/
 dist/
 xkcd_wrapper.egg-info/
 
-# Pycharm files
+# IDE files
 .idea/
+.vscode/
 
 # VirtualEnv
 venv/
