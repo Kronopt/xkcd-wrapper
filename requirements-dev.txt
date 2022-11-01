@@ -4,7 +4,7 @@ aioresponses==0.7.*             # tests, AsyncClient
 pylint==2.7.*                   # style
 black                           # style
 coverage==5.1.*                 # coverage
-mkdocs==1.4.*                   # docs
+mkdocs==1.3.*                   # docs
 twine                           # pypi tools
 pyOpenSSL==19.1.*               # twine dependency
 readme_renderer[md]==26.0.*     # command 'twine check'
