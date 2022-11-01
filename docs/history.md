@@ -1,7 +1,7 @@
 # History
 
 ### 1.0.2 (01-11-2022)
-* Support Python 3.10 and 3.11
+* Support Python 3.10
 * Update dependencies
 
 ### 1.0.1 (28-02-2021)
