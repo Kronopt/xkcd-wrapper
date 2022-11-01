@@ -20,10 +20,15 @@ class BaseClient:
         """
         BaseClient init
         """
-        self._base_url = 'https://xkcd.com/{}{}'
-        self._api = 'info.0.json'
-        self._explanation_wiki_url = 'https://www.explainxkcd.com/wiki/index.php/'
-        self._response_int_values = {'num': 'id', 'year': 'date', 'month': 'date', 'day': 'date'}
+        self._base_url = "https://xkcd.com/{}{}"
+        self._api = "info.0.json"
+        self._explanation_wiki_url = "https://www.explainxkcd.com/wiki/index.php/"
+        self._response_int_values = {
+            "num": "id",
+            "year": "date",
+            "month": "date",
+            "day": "date",
+        }
 
     def base_url(self):
         """
@@ -34,7 +39,7 @@ class BaseClient:
         str
             xkcd base API url
         """
-        return self._base_url.format('', '')
+        return self._base_url.format("", "")
 
     def latest_comic_url(self):
         """
@@ -45,7 +50,7 @@ class BaseClient:
         str
             xkcd API url for latest comic
         """
-        return self._base_url.format(self._api, '')
+        return self._base_url.format(self._api, "")
 
     def comic_id_url(self, comic_id):
         """
@@ -61,7 +66,7 @@ class BaseClient:
         str
             xkcd API url for comic with id = comic_id
         """
-        return self._base_url.format(str(comic_id) + '/', self._api)
+        return self._base_url.format(str(comic_id) + "/", self._api)
 
     def _parse_response(self, response):
         """
@@ -108,7 +113,11 @@ class BaseClient:
             except ValueError as err:
                 raise exceptions.BadResponseField(wrapper_value, api_value, err)
 
-        comic_url = self._base_url.format(response_dict['num'], '')
-        explanation_url = '{}{}'.format(self._explanation_wiki_url, response_dict['num'])
+        comic_url = self._base_url.format(response_dict["num"], "")
+        explanation_url = "{}{}".format(
+            self._explanation_wiki_url, response_dict["num"]
+        )
 
-        return Comic(response_dict, comic_url=comic_url, explanation_url=explanation_url)
+        return Comic(
+            response_dict, comic_url=comic_url, explanation_url=explanation_url
+        )

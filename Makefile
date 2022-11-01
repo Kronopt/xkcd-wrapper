@@ -1,4 +1,4 @@
-.PHONY: help install-dependencies install-dependencies-dev test lint coverage docs-test build build-test release clean clean-pyc clean-coverage clean-build
+.PHONY: help install-dependencies install-dependencies-dev test lint coverage docs-test build build-test release clean-coverage clean-build clean-pyc clean
 
 help:
 	@echo ""
@@ -31,6 +31,7 @@ test:
 
 lint:
 	python -m pylint xkcd_wrapper setup.py
+	python -m black --check .
 
 coverage:
 	python -m coverage run --source xkcd_wrapper -m nose2 -s ./tests -t .

@@ -66,7 +66,7 @@ class Client(BaseClient):
             If an http code different from 200 is returned
         """
         if not isinstance(comic_id, int):
-            raise TypeError('\'comic_id\' parameter must be an int.')
+            raise TypeError("'comic_id' parameter must be an int.")
 
         comic = self._parse_response(self._request_comic(comic_id))
 
@@ -99,7 +99,9 @@ class Client(BaseClient):
         xkcd_wrapper.exceptions.HttpError
             If an http code different from 200 is returned
         """
-        return self.get(0, raw_comic_image=raw_comic_image)  # comic_id of 0 requests latest comic
+        return self.get(
+            0, raw_comic_image=raw_comic_image
+        )  # comic_id of 0 requests latest comic
 
     # get_latest alias
     latest = get_latest
@@ -194,8 +196,10 @@ class Client(BaseClient):
         """
         raw_image_response = requests.get(raw_image_url)
         if raw_image_response.status_code != 200:
-            raise exceptions.HttpError(raw_image_response.status_code, raw_image_response.reason)
+            raise exceptions.HttpError(
+                raw_image_response.status_code, raw_image_response.reason
+            )
         return raw_image_response.content
 
     def __repr__(self):
-        return 'xkcd_wrapper.Client()'
+        return "xkcd_wrapper.Client()"
