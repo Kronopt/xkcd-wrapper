@@ -53,14 +53,14 @@ class Comic:
         explanation_url : str or None
             url to explainxkcd wiki
         """
-        self.id = xkcd_dict.get('num')
+        self.id = xkcd_dict.get("num")
         self.date = self._determine_date(xkcd_dict)
-        self.title = xkcd_dict.get('safe_title')
-        self.description = xkcd_dict.get('alt')
-        self.transcript = xkcd_dict.get('transcript')
+        self.title = xkcd_dict.get("safe_title")
+        self.description = xkcd_dict.get("alt")
+        self.transcript = xkcd_dict.get("transcript")
         self.image = raw_image
         self.image_extension = self._determine_image_extension()
-        self.image_url = xkcd_dict.get('img')
+        self.image_url = xkcd_dict.get("img")
         self.comic_url = comic_url
         self.explanation_url = explanation_url
 
@@ -91,9 +91,9 @@ class Comic:
         datetime.date or None
             date when comic was released
         """
-        day = xkcd_dict.get('day')
-        month = xkcd_dict.get('month')
-        year = xkcd_dict.get('year')
+        day = xkcd_dict.get("day")
+        month = xkcd_dict.get("month")
+        year = xkcd_dict.get("year")
         return datetime.date(year, month, day) if all([year, month, day]) else None
 
     def _determine_image_extension(self):
@@ -108,4 +108,4 @@ class Comic:
         return imghdr.what(None, self.image) if self.image else None
 
     def __repr__(self):
-        return 'xkcd_wrapper.Comic({})'.format(self.id)
+        return "xkcd_wrapper.Comic({})".format(self.id)

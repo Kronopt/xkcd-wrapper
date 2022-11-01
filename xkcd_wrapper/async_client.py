@@ -67,7 +67,7 @@ class AsyncClient(BaseClient):
             If an http code different from 200 is returned
         """
         if not isinstance(comic_id, int):
-            raise TypeError('\'comic_id\' parameter must be an int.')
+            raise TypeError("'comic_id' parameter must be an int.")
 
         comic = self._parse_response(await self._request_comic(comic_id))
 
@@ -100,7 +100,9 @@ class AsyncClient(BaseClient):
         xkcd_wrapper.exceptions.HttpError
             If an http code different from 200 is returned
         """
-        return await self.get(0, raw_comic_image=raw_comic_image)  # comic_id of 0 = latest comic
+        return await self.get(
+            0, raw_comic_image=raw_comic_image
+        )  # comic_id of 0 = latest comic
 
     # get_latest alias
     latest = get_latest
@@ -175,7 +177,9 @@ class AsyncClient(BaseClient):
         async with aiohttp.ClientSession() as session:
             async with session.get(comic_url) as xkcd_response:
                 if xkcd_response.status != 200:
-                    raise exceptions.HttpError(xkcd_response.status, xkcd_response.reason)
+                    raise exceptions.HttpError(
+                        xkcd_response.status, xkcd_response.reason
+                    )
                 xkcd_response_json = await xkcd_response.text()
 
         return xkcd_response_json
@@ -198,9 +202,11 @@ class AsyncClient(BaseClient):
         async with aiohttp.ClientSession() as session:
             async with session.get(raw_image_url) as raw_image_response:
                 if raw_image_response.status != 200:
-                    raise exceptions.HttpError(raw_image_response.status, raw_image_response.reason)
+                    raise exceptions.HttpError(
+                        raw_image_response.status, raw_image_response.reason
+                    )
                 raw_image_bytes = await raw_image_response.read()
         return raw_image_bytes
 
     def __repr__(self):
-        return 'xkcd_wrapper.AsyncClient()'
+        return "xkcd_wrapper.AsyncClient()"

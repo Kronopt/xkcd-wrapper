@@ -24,10 +24,10 @@ Async Usage:
 >>> asyncio.run(async_call())
 """
 
-__author__ = 'Pedro HC David, https://github.com/Kronopt'
-__credits__ = ['Pedro HC David']
-__license__ = 'GPLv3'
-__version__ = '1.0.1'
+__author__ = "Pedro HC David, https://github.com/Kronopt"
+__credits__ = ["Pedro HC David"]
+__license__ = "GPLv3"
+__version__ = "1.0.2"
 
 
 REQUESTS_INSTALLED = True
@@ -45,10 +45,11 @@ except ModuleNotFoundError:
 
 if not any([REQUESTS_INSTALLED, AIOHTTP_INSTALLED]):
     raise ModuleNotFoundError(
-        'Neither \'requests\' nor \'aiohttp\' are installed. '
-        'xkcd-wrapper needs at least one of those dependencies to work. '
-        'Use the correct pip command to install the necessary dependencies '
-        '(please refer to the xkcd-wrapper documentation).')
+        "Neither 'requests' nor 'aiohttp' are installed. "
+        "xkcd-wrapper needs at least one of those dependencies to work. "
+        "Use the correct pip command to install the necessary dependencies "
+        "(please refer to the xkcd-wrapper documentation)."
+    )
 
 from .comic import Comic
 from . import exceptions
